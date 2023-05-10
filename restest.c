@@ -295,7 +295,6 @@ int rbtree_erase(rbtree *t, node_t *p) {
   free(p);
   return 0;
 }
-// 중위순회 왼-> 오른쪽 탐색
 void inorder(const rbtree *t,node_t *search, key_t *arr,int* index){
     if (search == t->nil) return;
     inorder(t,search->left,arr,index);
@@ -311,98 +310,4 @@ int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) {
   inorder(t,search_node,arr,index);
   free(index);
   return 0;
-}
-int main(int argc, char *argv[]) {
-    int flag = 1;
-    int data;
-    int cnt = 0;
-    int insertdata;
-    int searchnode;
-    int deletenode;
-    int treeprint[1000];
-    node_t *nodesearch;
-    printf("트리를 생성하시겠습니까?\n1. 생성\t2. 안함\n\n");
-    int seclect;
-    scanf("%d",&seclect);
-    rbtree *tree;
-    if (seclect == 1){
-        tree = new_rbtree();
-    }
-    else {
-        printf("종료하겠습니다.\n");
-        exit(1);
-        return 0;
-    }
-    printf("메뉴를 선택하시오\n");
-    while(flag) {
-        printf("\n\n============================================================================================\n");
-        printf("선택할 메뉴를 선택해주세요\n0. 종료\t   1. 삽입\t2. 노드 존재 탐색\t3. 삭제\t\t4. 노드 확인\n");
-        printf("============================================================================================\n\n");
-        scanf("%d",&data);
-        if (data == 0){
-            nodesearch = rbtree_find(tree,searchnode);
-            if (nodesearch != NULL){
-                printf("아직 남아있는 노드가 있습니다.\n");
-            }
-            else{
-                printf("종료하겠습니다.\n");
-                delete_rbtree(tree);
-                break;
-            }
-        }
-        switch (data)
-        {
-        case 1:
-            printf("삽입할 노드를 적어주세요\n");
-            scanf("%d",&insertdata);
-            rbtree_insert(tree,insertdata);
-            printf("%d 노드가 삽입되었습니다!\n",insertdata);
-            cnt++;
-            printf("\n\n\n");
-            break;
-        case 2:
-            printf("탐색할 노드를 입력하세요\n");
-            scanf("%d",&searchnode);
-            nodesearch = rbtree_find(tree,searchnode); 
-            if (nodesearch == NULL){
-                printf("해당 노드가 없습니다.\n");
-                printf("\n\n\n");
-                break;
-            }
-            printf("탐색한 노드 => %d\n",nodesearch->key);
-            printf("%d번 노드가 존재합니다!\n",nodesearch->key);
-            printf("\n\n\n");
-            break;
-        case 3:
-            printf("삭제할 노드를 입력하세요\n");
-            printf("현재 노드 = ");
-            rbtree_to_array(tree,treeprint,cnt);
-            printf("\n\n");
-            scanf("%d",&deletenode);
-            nodesearch = rbtree_find(tree,deletenode); 
-            printf("\n");
-            if (nodesearch == NULL) {
-                printf("%d 노드가 존재하지 않습니다!\n",deletenode);
-            }
-            else{
-                rbtree_erase(tree,nodesearch);
-                printf("%d 노드가 삭제되었습니다!\n",deletenode);
-                cnt--;
-            }
-            printf("\n\n\n");
-            break;
-        case 4:
-            if(cnt <= 0){
-                printf("노드가 없습니다!\n");
-            }
-            else{
-                rbtree_to_array(tree,treeprint,cnt);
-            }
-            printf("\n\n");
-            break;
-        default:
-            break;
-        }
-    }
-    return 0;
 }

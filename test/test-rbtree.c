@@ -347,7 +347,6 @@ void test_find_erase_fixed() {
   const size_t n = sizeof(arr) / sizeof(arr[0]);
   rbtree *t = new_rbtree();
   assert(t != NULL);
-
   test_find_erase(t, arr, n);
 
   delete_rbtree(t);
